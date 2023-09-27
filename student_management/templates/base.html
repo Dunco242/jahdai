@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags, title, and other head content -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
+    
+</head>
+<body>
+    <!-- Dark-themed navigation bar -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'student_list' %}">Student List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'staff_list' %}">Staff List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'student_registration' %}">Register Student</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'staff_registration' %}">Register Staff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_incident' %}">Add Incident</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_milestone' %}">Add Milestone</a>
+                <!-- Replace the student_id with an actual student's ID -->
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- Content block -->
+    <div class="container mt-3">
+        {% block content %}
+        {% endblock %}
+    </div>
+<button class="btn btn-secondary mb-3" onclick="goBack()">Back</button>
+
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</body>
+</html>

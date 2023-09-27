@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Incidents</h2>
+    <h3>Search Student To Add Incident/s</h3>
+    <form id="search-form" class="d-flex" role="search" method="get">
+        <input id="search-input-first-name" class="form-control me-2" type="search" placeholder="First Name" aria-label="Search First Name">
+        <input id="search-input-last-name" class="form-control me-2" type="search" placeholder="Last Name" aria-label="Search Last Name">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <br>
+    <form id="incident-form" method="post">
+        {% csrf_token %}
+        {{ form.description.as_p }}
+        {{ form.date }}
+        
+    </form>
+    <br>
+    <form id="student-form">
+        <label for="student-first-name">First Name:</label><br>
+        <input type="text" id="student-first-name" name="student-first-name"><br>
+        <label for="student-last-name">Last Name:</label><br>
+        <input type="text" id="student-last-name" name="student-last-name"><br>
+        <label for="student-email">Email:</label><br>
+        <input type="text" id="student-email" name="student-email"><br>
+        <label for="incident-description">Incident Description:</label><br>
+        <textarea id="incident-description"></textarea><br>
+        <button button id="notify-button" type="submit" class="btn btn-primary">Add Incident</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#search-form').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{% url 'search_students' %}",
+            data: {
+                'first_name': $('#search-input-first-name').val(),
+                'last_name': $('#search-input-last-name').val()
+            },
+            dataType: 'json',
+            success: function(data) {
+                // Update the form with the student data
+                // This assumes that your Student model has a 'first_name', 'last_name' and 'email' field
+                // Replace 'first_name', 'last_name' and 'email' with the actual fields you want to display
+                $('#student-first-name').val(data.students[0].first_name);
+                $('#student-last-name').val(data.students[0].last_name);
+                $('#student-email').val(data.students[0].email);
+            }
+        });
+    });
+
+    $('#notify-button').on('click', function(event) {
+        event.preventDefault();
+        // Send an email to the student
+        // You'll need to implement this function on the server side
+        $.ajax({
+            url: "{% url 'send_email' %}",
+            data: {
+                'email': $('#student-email').val(),
+                'description': $('#incident-description').val()
+            },
+            dataType: 'json',
+            success: function(data) {
+                alert('Email sent!');
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

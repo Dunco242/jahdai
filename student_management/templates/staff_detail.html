@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Staff Detail</h2>
+    
+    <!-- Staff Information Card -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Staff Information
+        </div>
+        <div class="card-body">
+            <ul>
+                <li><strong>First Name:</strong> {{ staff.first_name }}</li>
+                <li><strong>Last Name:</strong> {{ staff.last_name }}</li>
+                <li><strong>Email:</strong> {{ staff.email }}</li>
+                <li><strong>Phone Number:</strong> {{ staff.phone_number }}</li>
+                <li><strong>Certifications:</strong> {% for cert in staff.certs.all %}{{ cert.get_name_display }}{% if not forloop.last %}, {% endif %}{% empty %}None{% endfor %}</li>
+                <li><strong>Role:</strong> {{ staff.role }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Staff Status Update Card -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Update Staff Role
+            </div>
+            <div class="card-body">
+                {{ staff_form.as_p }}
+            </div>
+        </div>
+
+        
+
+        <!-- Update Button -->
+        <button type="submit" name="update_submit" class="btn btn-primary">Update</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

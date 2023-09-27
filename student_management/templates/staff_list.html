@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Staff List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Certifications</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff_member in staff %}
+            <tr style="background-color: 
+                {% if staff_member.role == 'Current Staff' %}green
+                {% elif staff_member.role == 'Former Staff' %}red
+                {% elif staff_member.role == 'Staff in Training' %}yellow
+                {% endif %}">
+                <td><a href="{% url 'staff_detail' staff_member.id %}">{{ staff_member.first_name }} {{ staff_member.last_name }}</a></td>
+                <td>{% for cert in staff_member.certs.all %}{{ cert.get_name_display }}{% if not forloop.last %}, {% endif %}{% empty %}None{% endfor %}</td>
+                <td>{{staff_member.role}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

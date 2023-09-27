@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Notify Parents</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="student">Select Student:</label>
+            <input type="text" class="form-control" id="student" name="student">
+        </div>
+        
+        <div class="form-group">
+            <label for="incident">Select Incident:</label>
+            <input type="text" class="form-control" id="incident" name="incident">
+        </div>
+        
+        <div class="form-group">
+            <label for="milestone">Select Milestone:</label>
+            <input type="text" class="form-control" id="milestone" name="milestone">
+        </div>
+        
+        <div class="form-group">
+            <label for="custom_message">Custom Message:</label>
+            <textarea class="form-control" id="custom_message" name="custom_message" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Notify</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("Document is ready.");
+        
+        function initializeAutocomplete(inputId, endpointUrl) {
+            console.log(`Initializing autocomplete for ${inputId}`);
+            
+            $(inputId).autocomplete({
+                source: function (request, response) {
+                    console.log(`Searching for ${request.term} at ${endpointUrl}`);
+                    
+                    $.ajax({
+                        url: endpointUrl,
+                        dataType: "json",
+                        data: {
+                            term: request.term,
+                        },
+                        success: function (data) {
+                            console.log("Autocomplete data received:", data);
+                            response(data);
+                        },
+                    });
+                },
+                minLength: 2,
+            });
+        }
+
+        initializeAutocomplete("#student", "{% url 'autocomplete_students' %}");
+        initializeAutocomplete("#incident", "{% url 'autocomplete_incidents' %}");
+        initializeAutocomplete("#milestone", "{% url 'autocomplete_milestones' %}");
+    });
+</script>
+{% endblock %}
