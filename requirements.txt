@@ -12,5 +12,5 @@ python-decouple==3.8
 python-env==1.0.0
 reportlab==4.0.5
 sqlparse==0.4.4
-typing_extensions==4.8.0
+typing_extensions==4.7.1
 tzdata==2023.3
