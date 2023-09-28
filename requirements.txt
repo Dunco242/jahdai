@@ -9,7 +9,6 @@ psycopg2==2.9.7
 pydantic==2.3.0
 pydantic_core==2.6.3
 python-decouple==3.8
-python-dotenv==1.0.0
 python-env==1.0.0
 reportlab==4.0.5
 sqlparse==0.4.4
