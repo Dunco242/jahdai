@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import dj_database_url
 import os
 
 
@@ -69,16 +70,14 @@ WSGI_APPLICATION = 'jahdai.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': config('DATABASE_URL'),
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('PGUSER'),
-        'PASSWORD': config('PGPASSWORD'),
-        'HOST': config('PGHOST'),
-        'PORT': config('PGPORT'),
-    }
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
+        
+DATABASES['default']['NAME'] = config('DATABASE_NAME')
+DATABASES['default']['USER'] = config('DATABASE_USERNAME')
+DATABASES['default']['PASSWORD'] = config('PASSWORD')
+DATABASES['default']['PORT'] = config('PORT')
+
 
 
 # Password validation
