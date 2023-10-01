@@ -18,7 +18,8 @@ SECRET_KEY = 'django-insecure-b@pq*-^b#o+q$(0!@siini+(r@(!hnli&rgs0bo%w!@+tq&y_e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS += config('ALLOWED_HOSTS').split()
 
 
 # Application definition
@@ -43,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'jahdai.urls'
@@ -70,13 +72,14 @@ WSGI_APPLICATION = 'jahdai.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
-}
+    'default': dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+        )
+    }
+
+            
         
-DATABASES['default']['NAME'] = config('DATABASE_NAME')
-DATABASES['default']['USER'] = config('DATABASE_USERNAME')
-DATABASES['default']['PASSWORD'] = config('PASSWORD')
-DATABASES['default']['PORT'] = config('PORT')
+
 
 
 
