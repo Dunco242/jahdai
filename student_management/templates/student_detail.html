@@ -4,89 +4,68 @@
 <div class="container">
     <h2>Student Detail</h2>
     
-    <!-- Student Information Card -->
-    <div class="card mb-3">
-        <div class="card-header">
-            Student Information
-        </div>
-        <div class="card-body">
-            <ul>
-                <li><strong>First Name:</strong> {{ student.first_name }}</li>
-                <li><strong>Last Name:</strong> {{ student.last_name }}</li>
-                <li><strong>Date of Birth:</strong> {{ student.date_of_birth }}</li>
-                <li><strong>Gender:</strong> {{ student.get_gender_display }}</li>
-                <li><strong>Address:</strong> {{ student.address }}</li>
-                <li><strong>City:</strong> {{ student.city }}</li>
-                <li><strong>State:</strong> {{ student.state }}</li>
-                <li><strong>Zip Code:</strong> {{ student.zip_code }}</li>
-                <li><strong>Email:</strong> {{ student.email }}</li>
-                <li><strong>Phone Number:</strong> {{ student.phone_number }}</li>
-                <li><strong>Parent Name:</strong> {{ student.parent_name }}</li>
-                <li><strong>Parent Email:</strong> {{ student.parent_email }}</li>
-                <li><strong>Parent Phone Number:</strong> {{ student.parent_phone_number }}</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Student Status Update Card -->
     <form method="post">
         {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Student Information
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>First Name:</strong> {{ student_form.first_name }}</li>
+                    <li><strong>Last Name:</strong> {{ student_form.last_name }}</li>
+                    <li><strong>Date of Birth:</strong> {{ student_form.date_of_birth }}</li>
+                    <li><strong>Gender:</strong> {{ student_form.gender }}</li>
+                    <li><strong>Address:</strong> {{ student_form.address }}</li>
+                    <li><strong>Email:</strong> {{ student_form.email }}</li>
+                    <li><strong>Phone Number:</strong> {{ student_form.phone_number }}</li>
+                    <li><strong>Parent 1 Name:</strong> {{ student_form.parent1_f_name }} {{student_form.parent1_l_name }}</li>
+                    <li><strong>Parent 2 Name:</strong> {{ student_form.parent2_f_name }} {{ student_form.parent2_l_name }}
+                    <li><strong>Parent Email:</strong> {{ student_form.email }}</li>
+                    <li><strong>Parent Phone Number:</strong> {{ student_form.phone_number }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Student Status Update Card -->
         <div class="card mb-3">
             <div class="card-header">
                 Update Student Status
             </div>
             <div class="card-body">
-                {{ student_form.as_p }}
+                {{ student_form.status }}
             </div>
         </div>
 
-        <!-- Payment Status Update Card -->
-        <div class="card mb-3">
-            <div class="card-header">
-                Update Payment Status
-            </div>
-            <div class="card-body">
-                {{ fee_form.as_p }}
-            </div>
-        </div>
+        
 
         <!-- Allergies Card -->
-        {% if allergies %}
         <div class="card mb-3">
             <div class="card-header">
                 Allergies
             </div>
             <div class="card-body">
-                <p>{{ allergies.allergens }}</p>
+                {{ student_form.allergies }}
             </div>
         </div>
-        {% else %}
-        <p>No Allergies</p>
-        {% endif %}
 
         <!-- Fee Information Card -->
-        <div class="card mb-3">
-            <div class="card-header">
-                Fee Information
-            </div>
-           <div class="card-body">
+<div class="card mb-3">
+    <div class="card-header">
+        Fee Information
+    </div>
+    <div class="card-body">
         <ul>
-            <li><strong>Amount:</strong> {{ fee.amount }}</li>
-            <li><strong>Due Date:</strong> {{ fee.due_date }}</li>
-            <li><strong>Payment Status:</strong> 
-                {% if fee.payment_status == 'paid' %}<span class="badge bg-success">Paid</span>{% endif %}
-                {% if fee.payment_status == 'overdue' %}<span class="badge bg-warning">Overdue</span>{% endif %}
-                {% if fee.payment_status == 'credit' %}<span class="badge bg-info">Credit</span>{% endif %}
-                {% if fee.payment_status == 'payment_plan' %}<span class="badge bg-secondary">Payment Plan</span>{% endif %}
-            </li>
+            <li><strong>Amount:</strong> {{ fee_form.amount }}</li>
+            <li><strong>Due Date:</strong> {{ fee_form.due_date }}</li>
+            <li><strong>Payment Status:</strong> {{ fee_form.payment_status }}</li>
         </ul>
+    </div>
+</div>
 
-    <!-- Display the status update forms here -->
+        <!-- Add a submit button -->
+        <button type="submit" class="btn btn-primary">Save changes</button>
     </form>
-
-    <!-- Update Button -->
-    <button type="submit" name="update_submit" class="btn btn-primary">Update</button>
-
 </div>
 
 {% endblock %}

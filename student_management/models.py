@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Student(models.Model):
     parent1_f_name = models.CharField(max_length=50)
     parent1_l_name = models.CharField(max_length=50)
@@ -13,7 +12,7 @@ class Student(models.Model):
     phone_number = models.CharField(max_length=15)
     address = models.TextField()
     allergies = models.TextField(blank=True, null=True)
-    
+
     # Define choices for the status field
     STATUS_CHOICES = [
         ('current', 'Current Student'),
@@ -21,12 +20,21 @@ class Student(models.Model):
         ('sick', 'Sick Student'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    
+
     # Define a related_name for the student_fee field
     student_fee = models.OneToOneField('Fee', related_name='student_fee_relation', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        # Call the "real" save() method
+        super().save(*args, **kwargs)
+
+        # If this student doesn't have an associated fee yet, create one
+        if not hasattr(self, 'student_fee'):
+            Fee.objects.create(student=self)
+
 
 
 
@@ -67,7 +75,7 @@ class Event(models.Model):
         return self.event_name
 
 class Fee(models.Model):
-    student = models.OneToOneField('Student', related_name='fee_relation', on_delete=models.CASCADE, null=True, blank=True)
+    student = models.OneToOneField('Student', related_name='fee_relation', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     due_date = models.DateField(null=True, blank=True)
     payment_status_choices = [

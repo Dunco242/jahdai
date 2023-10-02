@@ -74,17 +74,21 @@ class NotificationForm(forms.Form):
 
 
 class StudentStatusForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = Student
-        fields = ['status']
+        fields = ['parent1_f_name', 'parent1_l_name', 'parent2_f_name', 'parent2_l_name',
+                    'first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',
+                    'address', 'allergies', 'status', 'allergies']
 
 
 
 
 class FeeForm(forms.ModelForm):
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = Fee
-        fields = ['payment_status']
+        fields = ['payment_status', 'amount', 'due_date']
 
 
 
